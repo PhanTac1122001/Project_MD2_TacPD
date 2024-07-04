@@ -2,10 +2,13 @@ package presentation;
 
 import business.entity.Category;
 import business.entity.Products;
+import business.entity.User;
 import business.feature.ICategoryFeature;
 import business.feature.IProductFeature;
+import business.feature.IUserFeature;
 import business.feature.impl.CategoryFeatureImpl;
 import business.feature.impl.ProductFeatureImpl;
+import business.feature.impl.UserFeatureImpl;
 
 import java.util.Scanner;
 
@@ -13,6 +16,7 @@ public class AdminMenu {
 
     private static final ICategoryFeature categoryFeature=new CategoryFeatureImpl();
     private static final IProductFeature productFeature =new ProductFeatureImpl();
+    private static final IUserFeature userFeature =new UserFeatureImpl();
     public static void menuAdmin(Scanner scanner) {
         boolean isLoop = true;
         do {
@@ -24,7 +28,12 @@ public class AdminMenu {
                     "5.\tAdd new category\n" +
                     "6.\tEdit category information\n" +
                     "7.\tDelete category\n" +
-                    "8.\tBack\n");
+                    "8.\tThêm người dùng\n" +
+                    "9.\tLấy ra danh sách người dùng\n" +
+                    "10.\tLấy về danh sách quyền\n" +
+                    "11.\tTìm kiếm người dùng theo tên\n" +
+                    "12.\tLấy về thông tin sản phẩm theo id\n" +
+                    "13.\tBack\n");
             System.out.println("Please enter: ");
             int choice = inputNumber(scanner);
             switch (choice) {
@@ -50,6 +59,21 @@ public class AdminMenu {
                     deleteCategory(scanner);
                     break;
                 case 8:
+                    addUser(scanner);
+                    break;
+                case 9:
+                    deleteCategory(scanner);
+                    break;
+                case 10:
+                    deleteCategory(scanner);
+                    break;
+                case 11:
+                    deleteCategory(scanner);
+                    break;
+                case 12:
+                    showUser(scanner);
+                    break;
+                case 13:
                     isLoop = false;
                     break;
                 default:
@@ -57,6 +81,25 @@ public class AdminMenu {
             }
         } while (isLoop);
 
+    }
+
+    private static void showUser(Scanner scanner) {
+        if (UserFeatureImpl.userList.isEmpty()) {
+            System.err.println("Empty list");
+            return;
+        }
+
+        UserFeatureImpl.userList.forEach(User::displayData);
+    }
+
+    private static void addUser(Scanner scanner) {
+        System.out.println("Enter the quantity you want to add to the product: ");
+        int number = inputNumber(scanner);
+        for (int i = 0; i < number; i++) {
+            User user = new User();
+            user.inputData(scanner);
+            userFeature.saveOrUpdate(user);
+        }
     }
 
     private static void showByIdCategory(Scanner scanner) {

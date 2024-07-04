@@ -26,7 +26,7 @@ public class ProductFeatureImpl implements IProductFeature {
             productsList.set(indexCheck, products);
             System.out.println("Update successfully");
         }
-        IOFileCategory.writeToFile(IOFileProduct.PATH_PRODUCT,productsList);
+        IOFileProduct.writeToFile(IOFileProduct.PATH_PRODUCT,productsList);
     }
 
     @Override
